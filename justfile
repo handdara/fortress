@@ -1,7 +1,7 @@
 alias r := run
 jd := justfile_directory()
 
-default: _dev-build
+default: _dev-build run
 
 # drop into dev shell
 develop:
@@ -10,9 +10,10 @@ develop:
 tags:
     ctags -R
 
-run:
-    ./build_fortress
+@run:
+    ./bin/build_fortress
+    #cat fortefile.nml
 
 _dev-build: tags
-    alejandra .
-    gfortran -std=f2018 fortress.f90 -o build_fortress
+    @alejandra . > /dev/null 2>&1
+    gfortran -std=f2018 fortress.f90 -o bin/build_fortress
